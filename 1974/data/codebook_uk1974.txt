@@ -1,0 +1,4 @@
+
+
+v1 = votos obtenidos por el candidato que quedó en 1er lugar
+v2 = votos obtenidos por el candidato que quedó en 2do lugar

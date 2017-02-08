@@ -1,0 +1,87 @@
+rm(list = ls())
+setwd("/home/eric/Desktop/mydocs/itam/pregCasos/casoCPspring2017/data/") # ESTO LO TIENES QUE ADAPTAR A TU MAQUINA
+
+feb <- read.csv("uk1974febRaw.csv", stringsAsFactors = FALSE)
+oct <- read.csv("uk1974octRaw.csv", stringsAsFactors = FALSE)
+
+wk <- feb # duplicate for manipulation
+# así se hace en R un by yr mo: egen tmp=sum(invested) de stata
+wk$vtot <- ave(wk$v, as.factor(wk$constituency), FUN=sum, na.rm=TRUE)
+wk$ncand <- ave(wk$n, as.factor(wk$constituency), FUN=function(x) length(x), na.rm=TRUE)
+wk$v3 <- wk$v2 <- wk$v1 <- 0
+wk$p3 <- wk$p2 <- wk$p1 <- "."
+wk$c3 <- wk$c2 <- wk$c1 <- "."
+# extrae votos del 2do, 3ero
+for (i in 1:max(wk$n)){
+    #i <- 1 #debug
+    sel <- which(wk$n==i)
+    tmp <- nrow(wk[sel,])
+    wk$v1[sel] <- sort(wk$v[sel], partial = tmp)[tmp]    # partial saves computing time
+    wk$c1[sel] <- wk$name[sel][which(wk$v[sel]==wk$v1[sel][1])]
+    wk$p1[sel] <- wk$party[sel][which(wk$v[sel]==wk$v1[sel][1])]
+    if (wk$ncand[sel][1]==1) next
+    wk$v2[sel] <- sort(wk$v[sel], partial = tmp-1)[tmp-1]
+    wk$c2[sel] <- wk$name[sel][which(wk$v[sel]==wk$v2[sel][1])]
+    wk$p2[sel] <- wk$party[sel][which(wk$v[sel]==wk$v2[sel][1])]
+    if (wk$ncand[sel][1]==2) next
+    wk$v3[sel] <- sort(wk$v[sel], partial = tmp-2)[tmp-2]
+    wk$c3[sel] <- wk$name[sel][which(wk$v[sel]==wk$v3[sel][1])]
+    wk$p3[sel] <- wk$party[sel][which(wk$v[sel]==wk$v3[sel][1])]
+}
+wk$voth <- wk$vtot - wk$v1 - wk$v2 - wk$v3
+wk$sh1 <- wk$v1/wk$vtot
+wk$sh2 <- wk$v2/wk$vtot
+wk$sh3 <- wk$v3/wk$vtot
+wk$shoth <- wk$voth/wk$vtot
+#
+wk <- wk[duplicated(wk$n)==FALSE,]
+wk <- wk[,c("n","constituency","region","status","electorate","turnout","ncand","vtot","v1","v2","v3","voth","sh1","sh2","sh3","shoth","c1","c2","c3","p1","p2","p3")]
+feb <- wk
+
+wk <- oct # duplicate for manipulation
+# así se hace en R un by yr mo: egen tmp=sum(invested) de stata
+wk$vtot <- ave(wk$v, as.factor(wk$constituency), FUN=sum, na.rm=TRUE)
+wk$ncand <- ave(wk$n, as.factor(wk$constituency), FUN=function(x) length(x), na.rm=TRUE)
+wk$v3 <- wk$v2 <- wk$v1 <- 0
+wk$p3 <- wk$p2 <- wk$p1 <- "."
+wk$c3 <- wk$c2 <- wk$c1 <- "."
+# extrae votos del 2do, 3ero
+for (i in 1:max(wk$n)){
+    #i <- 1 #debug
+    sel <- which(wk$n==i)
+    tmp <- nrow(wk[sel,])
+    wk$v1[sel] <- sort(wk$v[sel], partial = tmp)[tmp]    # partial saves computing time
+    wk$c1[sel] <- wk$name[sel][which(wk$v[sel]==wk$v1[sel][1])]
+    wk$p1[sel] <- wk$party[sel][which(wk$v[sel]==wk$v1[sel][1])]
+    if (wk$ncand[sel][1]==1) next
+    wk$v2[sel] <- sort(wk$v[sel], partial = tmp-1)[tmp-1]
+    wk$c2[sel] <- wk$name[sel][which(wk$v[sel]==wk$v2[sel][1])]
+    wk$p2[sel] <- wk$party[sel][which(wk$v[sel]==wk$v2[sel][1])]
+    if (wk$ncand[sel][1]==2) next
+    wk$v3[sel] <- sort(wk$v[sel], partial = tmp-2)[tmp-2]
+    wk$c3[sel] <- wk$name[sel][which(wk$v[sel]==wk$v3[sel][1])]
+    wk$p3[sel] <- wk$party[sel][which(wk$v[sel]==wk$v3[sel][1])]
+}
+wk$voth <- wk$vtot - wk$v1 - wk$v2 - wk$v3
+wk$sh1 <- wk$v1/wk$vtot
+wk$sh2 <- wk$v2/wk$vtot
+wk$sh3 <- wk$v3/wk$vtot
+wk$shoth <- wk$voth/wk$vtot
+#
+wk <- wk[duplicated(wk$n)==FALSE,]
+wk <- wk[,c("n","constituency","region","status","electorate","turnout","ncand","vtot","v1","v2","v3","voth","sh1","sh2","sh3","shoth","c1","c2","c3","p1","p2","p3")]
+oct <- wk
+
+# ARIAN
+# FALTA CODIFICAR CUATRO DUMMIES
+# feb$i1   = 1 si c1 es incumbent (si ganó el distrito en t-1),   = 0 de otro modo
+# feb$i2   = 1 si c2 es incumbent (si ganó el distrito en t-1),   = 0 de otro modo
+# feb$i3   = 1 si c3 es incumbent (si ganó el distrito en t-1),   = 0 de otro modo
+# feb$ioth = 1 si otro es incumbent (si ganó el distrito en t-1), = 0 de otro modo
+# PREPARA TAMBIEN UN CODEBOOK
+
+write.csv(feb, file = "uk1974feb.csv", row.names = FALSE)
+write.csv(oct, file = "uk1974oct.csv", row.names = FALSE)
+
+
+
