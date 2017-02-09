@@ -2,7 +2,7 @@
 # PON AQUI LA FUENTE COMPLETA DE LOS DATOS
 
 rm(list = ls())
-setwd("/home/eric/Desktop/mydocs/itam/pregCasos/casoCPspring2017/data/") # ESTO LO TIENES QUE ADAPTAR A TU MAQUINA
+setwd("/home/eric/Dropbox/data/elecs/uk/1974/data/") # ESTO LO TIENES QUE ADAPTAR A TU MAQUINA
 
 # lee datos brutos
 feb <- read.csv("uk1974febRaw.csv", stringsAsFactors = FALSE)
