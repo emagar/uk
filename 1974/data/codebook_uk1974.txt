@@ -1,4 +1,27 @@
-
-
+n  = numero del distrito
+constituency= nombre del distrito
+region = 
+norirl = dummy 1 pertenece al norte de irlanda
+status = informacion sobre el distrito
+electorate = número de personas registradas para votar
+turnout = votación total emitida entre el numero de personas registradas para votar
+ncand = número de candidatos que contendieron en ese distrito
+vtot = votacion total emitida
 v1 = votos obtenidos por el candidato que quedó en 1er lugar
 v2 = votos obtenidos por el candidato que quedó en 2do lugar
+v3 = votos obtenidos por el candidato que quedó en 3er lugar
+voth = votos obtenidos por los otros candidatos
+sh1 = votos obtenidos por el candidato que quedó en 1er lugar dividido por la votacion total emitida
+sh2 = votos obtenidos por el candidato que quedó en 2do lugar dividido por la votacion total emitida	
+sh3 = votos obtenidos por el candidato que quedó en 3er lugar dividido por la votacion total emitida	
+shoth = votos obtenidos por los demas candidatos dividido por la votacion total emitida
+c1 = nombre del candidato que quedó en 1er lugar
+c2 = nombre del candidato que quedó en 2do lugar	
+c3 = nombre del candidato que quedó en 3er lugar
+p1 = partido al que pertenece el candidato que quedó en 1er lugar
+p2 = partido al que pertenece el candidato que quedó en 2do lugar
+p3 = partido al que pertenece el candidato que quedó en 3er lugar
+i1 = dummy; 1 el candidato que quedó en primer lugar era incumbent o habia ganado un distrito en la pasada elección, 0 de otro modo.
+i2 = dummy; 1 el candidato que quedó en segundo lugar era incumbent o habia ganado un distrito en la pasada elección, 0 de otro modo.	
+i3 = dummy; 1 el candidato que quedó en tercer lugar era incumbent o habia ganado un distrito en la pasada elección, 0 de otro modo.
+ioth = dummy; 1 otro es incumbent, i.e. ninguno de los 3 habia ganado un distrito en la eleccion pasada.
