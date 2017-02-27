@@ -3,8 +3,8 @@ library(dplyr)
 library(tidyr)
 
 rm(list = ls())
-#setwd("/home/eric/Dropbox/data/elecs/uk/1974/data/")
-setwd("/home/lobo/Github/uk/1974/data/")
+setwd("/home/eric/Dropbox/data/elecs/uk/1974/data/")
+#setwd("/home/lobo/Github/uk/1974/data/")
 
 # lee datos brutos
 feb <- read.csv("uk1974febRaw.csv", stringsAsFactors = FALSE)
@@ -74,7 +74,11 @@ feb <- procesa(feb,incumb,1)
 # prepara datos de la eleccion de octubre
 oct <- procesa(oct,incumb,2)
 
+sel <- which(feb$ioth==1)
+feb[sel,]
+
 head(feb)
+table(oct$ioth)
 
 write.csv(feb, file = "uk1974feb.csv", row.names = FALSE)
 write.csv(oct, file = "uk1974oct.csv", row.names = FALSE)
