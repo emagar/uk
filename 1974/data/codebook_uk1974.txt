@@ -24,7 +24,8 @@ c3 = nombre del candidato que quedó en 3er lugar
 p1 = partido del candidato que quedó en 1er lugar
 p2 = partido del candidato que quedó en 2do lugar
 p3 = partido del candidato que quedó en 3er lugar
-i1 = dummy; 1 el candidato que quedó en primer lugar era incumbent (ganó un distrito en la pasada elección general), 0 de otro modo.
-i2 = dummy; 1 el candidato que quedó en segundo lugar era incumbent (ganó un distrito en la pasada elección general), 0 de otro modo.	
-i3 = dummy; 1 el candidato que quedó en tercer lugar era incumbent (ganó un distrito en la pasada elección general), 0 de otro modo.
-ioth = dummy; 1 alguno de los otros contendientes es incumbent, 0 en otro caso.
+i1 = dummy; 1 el candidato que quedó en 1er lugar era incumbent (ganó un distrito en la pasada elección general o en una by-election), 0 de otro modo.
+i2 = dummy; 1 el candidato que quedó en 2do lugar era incumbent (ganó un distrito en la pasada elección general o en una by-election), 0 de otro modo.	
+i3 = dummy; 1 el candidato que quedó en 3er lugar era incumbent (ganó un distrito en la pasada elección general o en una by-election), 0 de otro modo.
+ioth = dummy; 1 alguno de los otros contendientes era incumbent (ganó un distrito en la pasada elección general o en una by-election), 0 en otro caso.
+byEl =  = dummy; 1 hubo en el distrito una by-election entre la elección general pasada y la presente, 0 en otro caso. 
