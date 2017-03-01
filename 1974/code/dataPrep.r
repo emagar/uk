@@ -10,6 +10,10 @@ setwd("/home/lobo/Github/uk/1974/data/")
 feb <- read.csv("uk1974febRaw.csv", stringsAsFactors = FALSE)
 oct <- read.csv("uk1974octRaw.csv", stringsAsFactors = FALSE)
 incumb<-read.csv("Ganadores.csv", stringsAsFactors = FALSE)
+#Une los que ganaron por by-election y los que ganaron desde antes
+cnam<-colnames(incumb)
+incumb<-data.frame(c(incumb$X1970,incumb$by_election.74_02), c(incumb$X1974_02,incumb$by_election.74_10),incumb$X1974_10)
+colnames(incumb)<-cnam[1:3]
 
 #Funcion para ver si un cierto vector tiene incumbents
 is.incumbent<-function(Z=NULL,incu=NULL,colaño=NULL)(
@@ -78,6 +82,4 @@ head(feb)
 
 write.csv(feb, file = "uk1974feb.csv", row.names = FALSE)
 write.csv(oct, file = "uk1974oct.csv", row.names = FALSE)
-
-
 
