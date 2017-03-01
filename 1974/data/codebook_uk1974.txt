@@ -26,3 +26,4 @@ p3 = partido del candidato que quedó en 3er lugar
 i1 = dummy; 1 el candidato que quedó en primer lugar era incumbent (ganó un distrito en la pasada elección general), 0 de otro modo.
 i2 = dummy; 1 el candidato que quedó en segundo lugar era incumbent (ganó un distrito en la pasada elección general), 0 de otro modo.	
 i3 = dummy; 1 el candidato que quedó en tercer lugar era incumbent (ganó un distrito en la pasada elección general), 0 de otro modo.
+ioth = dummy; 1 alguno de los otros contendientes es incumbent, 0 en otro caso.
