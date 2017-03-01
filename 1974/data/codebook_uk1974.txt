@@ -13,6 +13,7 @@ v1 = votos obtenidos por el candidato que quedó en 1er lugar en el distrito
 v2 = votos obtenidos por el candidato que quedó en 2do lugar en el distrito
 v3 = votos obtenidos por el candidato que quedó en 3er lugar en el distrito
 voth = votos obtenidos por los demás candidatos en el distrito
+
 sh1 = votos obtenidos por el candidato que quedó en 1er lugar dividido por la votacion total emitida
 sh2 = votos obtenidos por el candidato que quedó en 2do lugar dividido por la votacion total emitida	
 sh3 = votos obtenidos por el candidato que quedó en 3er lugar dividido por la votacion total emitida	
