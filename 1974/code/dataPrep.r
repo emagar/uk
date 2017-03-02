@@ -3,8 +3,8 @@ library(dplyr)
 library(tidyr)
 
 rm(list = ls())
-#setwd("/home/eric/Dropbox/data/elecs/uk/1974/data/")
-setwd("/home/lobo/Github/uk/1974/data/")
+setwd("/home/eric/Dropbox/data/elecs/uk/1974/data/")
+#setwd("/home/lobo/Github/uk/1974/data/")
 
 # lee datos brutos
 feb <- read.csv("uk1974febRaw.csv", stringsAsFactors = FALSE)
@@ -22,13 +22,12 @@ is.incumbent<-function(Z=NULL,incu=NULL,colaño=NULL)(
 )
 
 # funcion para procesar los datos
-
 procesa <- function(X = NULL, incu=NULL,colaño=NULL){#Incu es para pasar el data frame con los ganadores de cada año. Colaño es para indicar en que columna estan los ganadores con los que se comparar
   Y<-X #Guarda una copia
   X$constituency <- gsub("&amp;", "and", X$constituency) # limpia nombre del distrito
   X$turnout <- X$turnout/100
   # distritos norirlandeses
-  sel <- grep("Antrim North|Antrim South|Armagh|Belfast East|Belfast North|Belfast South|Down North|Down South|Fermanagh and South Tyrone|Londonderry|Ulster Mid", X$constituency)
+  sel <- grep("Antrim North|Antrim South|Armagh|Belfast East|Belfast North|Belfast South|Belfast West|Down North|Down South|Fermanagh and South Tyrone|Londonderry|Ulster Mid", X$constituency)
   X$norirl <- 0; X$norirl[sel] <- 1
   # así se hace en R un by yr mo: egen tmp=sum(invested) de stata
   X$vtot <- ave(X$v, as.factor(X$constituency), FUN=sum, na.rm=TRUE)
@@ -66,11 +65,11 @@ procesa <- function(X = NULL, incu=NULL,colaño=NULL){#Incu es para pasar el dat
   X$i2<-is.incumbent(X$c2,incu,colaño)
   X$i3<-is.incumbent(X$c3,incu,colaño)
   
-  Y<-select(Y,n,name) #Hace un data frame con solo las variables n y name
-  Y$pl<-sequence(rle(Y$n)$lengths) #Le agrega al anterior data frame una variable que indica el lugar en que quedo cada candidato en su distrito
-  places<-spread(Y,pl,name)#Primer, segunto, tercer.... estan acomodado por columnas de cada distrito
-  X$ioth<-as.numeric(apply( apply(places[,4:length(places[1,])], 2 , is.incumbent, incu=incu,colaño=colaño),1,sum)>0)
-  X$byEl<-as.numeric(pmatch(X$constituency, by_election[,2*colaño-1], nomatch=0)>0)
+  Y <- select(Y,n,name) #Hace un data frame con solo las variables n y name
+  Y$pl <- sequence(rle(Y$n)$lengths) #Le agrega al anterior data frame una variable que indica el lugar en que quedo cada candidato en su distrito
+  places <- spread(Y,pl,name)#Primer, segunto, tercer.... estan acomodado por columnas de cada distrito
+  X$ioth <- as.numeric(apply( apply(places[,4:length(places[1,])], 2 , is.incumbent, incu=incu,colaño=colaño),1,sum)>0)
+  X$byEl <- as.numeric(pmatch(X$constituency, by_election[,2*colaño-1], nomatch=0)>0)
   return(X)
 }
 
@@ -84,6 +83,11 @@ feb[sel,]
 
 head(feb)
 table(oct$ioth)
+
+sel <- which(feb$region=="[N]")
+feb$constituency[sel]
+
+table(feb$norirl, feb$region)
 
 write.csv(feb, file = "uk1974feb.csv", row.names = FALSE)
 write.csv(oct, file = "uk1974oct.csv", row.names = FALSE)
