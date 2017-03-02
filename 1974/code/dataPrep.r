@@ -3,17 +3,18 @@ library(dplyr)
 library(tidyr)
 
 rm(list = ls())
-setwd("/home/eric/Dropbox/data/elecs/uk/1974/data/")
-#setwd("/home/lobo/Github/uk/1974/data/")
+#setwd("/home/eric/Dropbox/data/elecs/uk/1974/data/")
+setwd("/home/lobo/Github/uk/1974/data/")
 
 # lee datos brutos
 feb <- read.csv("uk1974febRaw.csv", stringsAsFactors = FALSE)
 oct <- read.csv("uk1974octRaw.csv", stringsAsFactors = FALSE)
 incumb<-read.csv("Ganadores.csv", stringsAsFactors = FALSE)
+by_election<-read.csv("by_election.csv", stringsAsFactors = FALSE)
 #Une los que ganaron por by-election y los que ganaron desde antes
-cnam<-colnames(incumb)
-incumb<-data.frame(c(incumb$X1970,incumb$by_election.74_02), c(incumb$X1974_02,incumb$by_election.74_10),incumb$X1974_10)
-colnames(incumb)<-cnam[1:3]
+incumb<-data.frame(c(incumb$X1970, by_election$bef_1974_02), c(incumb$X1974_02,by_election$bef_1974_10),  c(incumb$X1974_10,rep("",30) ))
+
+
 
 #Funcion para ver si un cierto vector tiene incumbents
 is.incumbent<-function(Z=NULL,incu=NULL,colaño=NULL)(
@@ -69,7 +70,7 @@ procesa <- function(X = NULL, incu=NULL,colaño=NULL){#Incu es para pasar el dat
   Y$pl<-sequence(rle(Y$n)$lengths) #Le agrega al anterior data frame una variable que indica el lugar en que quedo cada candidato en su distrito
   places<-spread(Y,pl,name)#Primer, segunto, tercer.... estan acomodado por columnas de cada distrito
   X$ioth<-as.numeric(apply( apply(places[,4:length(places[1,])], 2 , is.incumbent, incu=incu,colaño=colaño),1,sum)>0)
-  
+  X$byEl<-as.numeric(pmatch(X$constituency, by_election[,2*colaño-1], nomatch=0)>0)
   return(X)
 }
 
