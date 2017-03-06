@@ -59,5 +59,4 @@ sel <- which(feb$ioth==1)
 feb[sel,]
 
 
-
-table(oct$byEl)
+table(feb$byEl)

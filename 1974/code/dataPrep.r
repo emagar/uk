@@ -84,11 +84,6 @@ feb[sel,]
 head(feb)
 table(oct$ioth)
 
-sel <- which(feb$region=="[N]")
-feb$constituency[sel]
-
-table(feb$norirl, feb$region)
-
 write.csv(feb, file = "uk1974feb.csv", row.names = FALSE)
 write.csv(oct, file = "uk1974oct.csv", row.names = FALSE)
 
