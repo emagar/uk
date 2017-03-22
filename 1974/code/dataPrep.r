@@ -9,21 +9,19 @@ setwd("/home/eric/Dropbox/data/elecs/uk/1974/data/")
 # lee datos brutos
 feb <- read.csv("uk1974febRaw.csv", stringsAsFactors = FALSE)
 oct <- read.csv("uk1974octRaw.csv", stringsAsFactors = FALSE)
-incumb<-read.csv("Ganadores.csv", stringsAsFactors = FALSE)
-by_election<-read.csv("by_election.csv", stringsAsFactors = FALSE)
+incumb <- read.csv("Ganadores.csv", stringsAsFactors = FALSE)
+by_election <- read.csv("by_election.csv", stringsAsFactors = FALSE)
 #Une los que ganaron por by-election y los que ganaron desde antes
-incumb<-data.frame(c(incumb$X1970, by_election$bef_1974_02), c(incumb$X1974_02,by_election$bef_1974_10),  c(incumb$X1974_10,rep("",30) ))
-
-
+incumb <- data.frame(c(incumb$X1970, by_election$bef_1974_02), c(incumb$X1974_02,by_election$bef_1974_10),  c(incumb$X1974_10,rep("",30) ))
 
 #Funcion para ver si un cierto vector tiene incumbents
-is.incumbent<-function(Z=NULL,incu=NULL,colaño=NULL)(
+is.incumbent <- function(Z=NULL,incu=NULL,colaño=NULL)(
   return(as.numeric(pmatch(Z,incu[,colaño], nomatch=0)>0))
 )
 
 # funcion para procesar los datos
-procesa <- function(X = NULL, incu=NULL,colaño=NULL){#Incu es para pasar el data frame con los ganadores de cada año. Colaño es para indicar en que columna estan los ganadores con los que se comparar
-  Y<-X #Guarda una copia
+procesa <- function(X = NULL, incu=NULL,colaño=NULL){ #Incu es para pasar el data frame con los ganadores de cada año. Colaño es para indicar en que columna estan los ganadores con los que se va a comparar
+  Y <- X #Guarda una copia
   X$constituency <- gsub("&amp;", "and", X$constituency) # limpia nombre del distrito
   X$turnout <- X$turnout/100
   # distritos norirlandeses
@@ -77,12 +75,6 @@ procesa <- function(X = NULL, incu=NULL,colaño=NULL){#Incu es para pasar el dat
 feb <- procesa(feb,incumb,1)
 # prepara datos de la eleccion de octubre
 oct <- procesa(oct,incumb,2)
-
-sel <- which(feb$ioth==1)
-feb[sel,]
-
-head(feb)
-table(oct$ioth)
 
 write.csv(feb, file = "uk1974feb.csv", row.names = FALSE)
 write.csv(oct, file = "uk1974oct.csv", row.names = FALSE)
